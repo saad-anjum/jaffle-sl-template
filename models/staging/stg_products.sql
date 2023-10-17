@@ -20,7 +20,7 @@ renamed as (
 
 
         ---------- numerics
-        (price / 100.0)::float as product_price,
+        CAST(price / 100.0 as FLOAT64) as product_price,
 
         ---------- booleans
         case

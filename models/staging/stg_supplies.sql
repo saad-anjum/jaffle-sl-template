@@ -19,7 +19,7 @@ renamed as (
         name as supply_name,
 
         ---------- numerics
-        (cost / 100.0)::float as supply_cost,
+        CAST(cost / 100.0 as FLOAT64) as supply_cost,
 
         ---------- booleans
         perishable as is_perishable_supply

@@ -18,8 +18,8 @@ renamed as (
         customer as customer_id,
 
         ---------- numerics
-        (order_total / 100.0)::float as order_total,
-        (tax_paid / 100.0)::float as tax_paid,
+        CAST(order_total / 100.0 as FLOAT64) as order_total,
+        CAST(tax_paid / 100.0 as FLOAT64) as tax_paid,
 
         ---------- timestamps
         ordered_at

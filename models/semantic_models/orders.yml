@@ -1,0 +1,37 @@
+semantic_models:
+  - name: orders
+    defaults:
+      agg_time_dimension: ordered_at
+    description: |
+      Order fact table. This table is at the order grain with one row per order.
+    model: ref('stg_orders')
+    entities:
+      # we use the column for the name here because order is a reserved word in SQL
+      - name: order_id
+        type: primary
+      - name: location
+        type: foreign
+        expr: location_id
+      - name: customer
+        type: foreign
+        expr: customer_id
+    dimensions:
+      - name: ordered_at
+        expr: date_trunc(ordered_at, DAY)
+        type: time
+        type_params:
+          time_granularity: day
+      - name: is_large_order
+        type: categorical
+        expr: case when order_total > 50 then true else false end
+    measures:
+      - name: order_total
+        description: The total amount for each order including taxes.
+        agg: sum
+      - name: tax_paid
+        description: The total tax paid on each order.
+        agg: sum
+      - name: order_count
+        description: The count of individual orders.
+        expr: 1
+        agg: sum
